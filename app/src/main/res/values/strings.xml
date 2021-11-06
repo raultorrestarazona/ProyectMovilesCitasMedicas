@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HospitalProyectoIntegrador</string>
+    <string-array name="spnDepartamentos">
+    </string-array>
+</resources>
