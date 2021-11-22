@@ -2,7 +2,6 @@ package com.example.hospitalproyectointegrador;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,7 +20,6 @@ import com.example.hospitalproyectointegrador.models.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,8 +30,7 @@ public class PerfilUsuario extends AppCompatActivity {
     EditText edtDniPU,edtNombrePU,edtApellidoPU,edtFechaNacimientoPU,edtCelularPU,edtContraseñaPU,edtRepitaContraseñaPU;
     Spinner spnDepartamentoPU,spnProvinciaPU,spnDistritoPU;
 
-    List<Usuario> objUsuario = new ArrayList<Usuario>();
-
+    Usuario objUsuario = new Usuario();
     List<Departamento> lista;
     List<Provincia> listaProvincias;
     List<Distrito> listaDistritos;
@@ -54,8 +51,8 @@ public class PerfilUsuario extends AppCompatActivity {
         spnDepartamentoPU=(Spinner) findViewById(R.id.spnDepartamentoListPU);
         spnProvinciaPU=(Spinner) findViewById(R.id.spnProvinciaPU);
         spnDistritoPU=(Spinner) findViewById(R.id.spnDistritoPU);
-        mostrarDatos();
         llenarDepartamentos();
+        buscarUsuario("11112222");
         btnPerfilUsuario_Regresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,16 +62,34 @@ public class PerfilUsuario extends AppCompatActivity {
         });
     }
 
+    public void buscarUsuario(String username){
+        Call<Usuario> call =  ApiAdapter.getUserService().UsuarioxUsername(username);
+        call.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if(response.isSuccessful()){
+                    objUsuario =   response.body();
+                    mostrarDatos(objUsuario);
+                    mensaje("OBJETO...",objUsuario.getApellidos());
+                }else{
+                    mensaje("LISTANDO USUARIO....", "ERROR -> Error en else");
+                }
+            }
 
-    void mostrarDatos(){
-        List<Usuario> bean= (List<Usuario>) getIntent().getSerializableExtra("usuario");
-        edtDniPU.setText(bean.get(0).getDni());
-        edtNombrePU.setText(bean.get(0).getNombre());
-        edtApellidoPU.setText(bean.get(0).getApellidos());
-        edtFechaNacimientoPU.setText(bean.get(0).getFechanacimiento());
-        edtCelularPU.setText(bean.get(0).getCelular());
-        edtContraseñaPU.setText(bean.get(0).getContraseña());
-        edtRepitaContraseñaPU.setText(bean.get(0).getContraseña());
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                mensajeError("ERROR -> Error onFailure 2",t);
+            }
+        });
+    }
+    void mostrarDatos(Usuario objUsuario){
+        edtDniPU.setText(objUsuario.getDni());
+        edtNombrePU.setText(objUsuario.getNombre());
+        edtApellidoPU.setText(objUsuario.getApellidos());
+        edtFechaNacimientoPU.setText(objUsuario.getFechanacimiento());
+        edtCelularPU.setText(objUsuario.getCelular());
+        edtContraseñaPU.setText(objUsuario.getContraseña());
+        edtRepitaContraseñaPU.setText(objUsuario.getContraseña());
     }
 
     void llenarDistrito(Integer idProvincia){
@@ -158,8 +173,12 @@ public class PerfilUsuario extends AppCompatActivity {
         }
     }*/
 
-    void mensaje(String msg){
+    void mensaje(String s, String msg){
         Toast toast1 =  Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG);
+        toast1.show();
+    }
+    void mensajeError(String s, Throwable msg){
+        Toast toast1 =  Toast.makeText(getApplicationContext(), (CharSequence) msg, Toast.LENGTH_LONG);
         toast1.show();
     }
 }

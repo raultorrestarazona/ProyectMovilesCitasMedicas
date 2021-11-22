@@ -26,7 +26,7 @@ public class PacienteIngreso extends AppCompatActivity {
     TextView txtNombre,txtDni;
     Button btnPerfilPaciente,btnCrearCitaPaciente,btnHistorialCitasxFechaPaciente,btnCerrarSesionPaciente;
 
-    List<Usuario> objUsuario = new ArrayList<Usuario>();
+    Usuario objUsuario = new Usuario();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +48,9 @@ public class PacienteIngreso extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 listarUsuario(passedDni);
-                List<Usuario> objUsuario = new ArrayList<>();
                 //crear objeto de la clase Intent
                 Intent intent=new Intent(PacienteIngreso.this, com.example.hospitalproyectointegrador.PerfilUsuario.class);
-                //crear una clave dentro del objeto "intent"
-                intent.putExtra("usuario", (Serializable) objUsuario);
+                intent.putExtra("dniPerf", (Serializable) objUsuario.getDni());
                 //direccionar
                 startActivity(intent);
             }
@@ -86,27 +84,30 @@ public class PacienteIngreso extends AppCompatActivity {
         });
     }
     public void listarUsuario(String username){
-        mensaje("LISTANDO USUARIO....");
-        Call<List<Usuario>> call =  ApiAdapter.getUserService().UsuarioxUsername(username);
-        call.enqueue(new Callback<List<Usuario>>() {
+        Call<Usuario> call =  ApiAdapter.getUserService().UsuarioxUsername(username);
+        call.enqueue(new Callback<Usuario>() {
             @Override
-            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if(response.isSuccessful()){
-                    List<Usuario> listausuario =   response.body();
-                    objUsuario.addAll(listausuario);
+                    objUsuario =   response.body();
+
                 }else{
-                    mensaje("ERROR -> Error en la respuesta");
+                    mensaje("LISTANDO USUARIO....", "ERROR -> Error en else");
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Usuario>> call, Throwable t) {
-                mensaje("ERROR -> Error en la respuesta");
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                mensajeError("ERROR -> Error onFailure 2",t);
             }
         });
     }
-    void mensaje(String msg){
+    void mensaje(String s, String msg){
         Toast toast1 =  Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG);
+        toast1.show();
+    }
+    void mensajeError(String s, Throwable msg){
+        Toast toast1 =  Toast.makeText(getApplicationContext(), (CharSequence) msg, Toast.LENGTH_LONG);
         toast1.show();
     }
 }

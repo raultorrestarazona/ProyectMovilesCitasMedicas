@@ -37,5 +37,5 @@ public interface ApiService {
     public abstract Call<Void> regisUsuario(@Body Usuario objUsuario);
 
     @GET("usuario/{username}")
-    public abstract Call<List<Usuario>> UsuarioxUsername(@Path("username") String username);
+    public abstract Call<Usuario> UsuarioxUsername(@Path("username") String username);
 }
