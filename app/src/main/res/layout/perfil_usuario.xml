@@ -24,23 +24,23 @@
             android:text="ACTUALIZAR USUARIO"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="31sp"
             android:textStyle="bold|italic" />
 
         <LinearLayout
-            android:layout_width="411dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:text="DNI :"
+                android:text="Dni:"
                 android:textAlignment="center"
-                android:textColor="#FAF9F9" />
+                android:textColor="#F4F3F3"/>
 
             <EditText
-                android:id="@+id/edtDNINU"
+                android:id="@+id/edtDniPU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -55,7 +55,6 @@
                 android:paddingBottom="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#ccc" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -66,19 +65,19 @@
             <TextView
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:text="Nombre :"
+                android:text="Nombres:"
                 android:textAlignment="center"
-                android:textColor="#FAF9F9" />
+                android:textColor="#F4F3F3"/>
 
             <EditText
-                android:id="@+id/edtNombreNU"
+                android:id="@+id/edtNombrePU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/input"
-                android:hint="Nombre"
+                android:hint="Nombres"
                 android:inputType="textPersonName"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
@@ -86,7 +85,6 @@
                 android:paddingBottom="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#ccc" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -97,12 +95,12 @@
             <TextView
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:text="Apellidos :"
+                android:text="Apellidos:"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF" />
+                android:textColor="#F4F3F3"/>
 
             <EditText
-                android:id="@+id/edtApellidosNU"
+                android:id="@+id/edtApellidosPU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -117,7 +115,6 @@
                 android:paddingBottom="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#ccc" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -128,12 +125,12 @@
             <TextView
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:text="Fecha de Nacimiento :"
+                android:text="Fecha de Nacimiento"
                 android:textAlignment="center"
-                android:textColor="#F4F3F3" />
+                android:textColor="#F4F3F3"/>
 
             <EditText
-                android:id="@+id/edtFechaNacimientoNU"
+                android:id="@+id/edtFechaNacimientoPU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -148,7 +145,6 @@
                 android:paddingBottom="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#ccc" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -159,12 +155,42 @@
             <TextView
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:text="Departamento :"
+                android:text="Departamento:"
                 android:textAlignment="center"
-                android:textColor="#F8F5F5" />
+                android:textColor="#F8F5F5"/>
 
             <Spinner
-                android:id="@+id/spnDepartamentosList"
+                android:id="@+id/spnDepartamentoListPU"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/input"
+                android:hint="Departamento:"
+                android:inputType="textPersonName"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#fff"
+                android:textColorHint="#ccc" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="Provincia:"
+                android:textAlignment="center"
+                android:textColor="#F8F5F5"/>
+
+            <Spinner
+                android:id="@+id/spnProvinciaPU"
                 android:layout_width="match_parent"
                 android:layout_height="47dp"
                 android:layout_marginLeft="20dp"
@@ -179,7 +205,6 @@
                 android:paddingBottom="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#ccc" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -190,12 +215,12 @@
             <TextView
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:text="Provincia :"
+                android:text="Distrito:"
                 android:textAlignment="center"
-                android:textColor="#F8F5F5" />
+                android:textColor="#F8F5F5"/>
 
             <Spinner
-                android:id="@+id/spnProvinciaNU"
+                android:id="@+id/spnDistritoPU"
                 android:layout_width="match_parent"
                 android:layout_height="47dp"
                 android:layout_marginLeft="20dp"
@@ -210,38 +235,6 @@
                 android:paddingBottom="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#ccc" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:text="Distrito :"
-                android:textAlignment="center"
-                android:textColor="#F8F5F5" />
-
-            <Spinner
-                android:id="@+id/spnDistritoListNU"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/input"
-                android:hint=""
-                android:inputType="textPersonName"
-                android:paddingLeft="20dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp"
-                android:textColor="#fff"
-                android:textColorHint="#ccc" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -252,12 +245,42 @@
             <TextView
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:text="Contraseña :"
+                android:text="Celular:"
                 android:textAlignment="center"
-                android:textColor="#FAF9F9" />
+                android:textColor="#F8F5F5" />
 
             <EditText
-                android:id="@+id/edtContraseñaNU"
+                android:id="@+id/edtCelularPU"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/input"
+                android:hint="Celular"
+                android:inputType="textPersonName"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#fff"
+                android:textColorHint="#ccc" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="Contraseña:"
+                android:textAlignment="center"
+                android:textColor="#F8F5F5"/>
+
+            <EditText
+                android:id="@+id/edtContraseñaPU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -272,7 +295,6 @@
                 android:paddingBottom="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#ccc" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -281,14 +303,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="125dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Repita Contraseña :"
+                android:text="Repita Contraseña"
                 android:textAlignment="center"
-                android:textColor="#FAF9F9" />
+                android:textColor="#F8F5F5"/>
 
             <EditText
-                android:id="@+id/edtRptContraseñaNU"
+                android:id="@+id/edtRepitaContraseñaPU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -303,7 +325,6 @@
                 android:paddingBottom="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#ccc" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -312,7 +333,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnPerfilUsuario_Registar"
+                android:id="@+id/btnPerfilUsuario_Actualizar"
                 android:layout_width="173dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -320,7 +341,7 @@
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/btn_fondo_color"
                 android:elevation="5dp"
-                android:text="REGISTRAR"
+                android:text="ACTUALIZAR"
                 android:textColor="#fff"
                 android:textSize="16sp" />
 

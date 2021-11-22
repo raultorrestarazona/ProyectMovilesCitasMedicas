@@ -50,7 +50,7 @@ public class NuevoUsuario extends AppCompatActivity{
         edtDNINU = (EditText) findViewById(R.id.edtDNINU);
         edtContraseñaNU = (EditText) findViewById(R.id.edtContraseñaNU);
         edtRptContraseñaNU = (EditText) findViewById(R.id.edtRptContraseñaNU);
-        spnDepartamentosNU = (Spinner) findViewById(R.id.spnDepartamentosList);
+        spnDepartamentosNU = (Spinner) findViewById(R.id.spnDepartamentosListNU);
         spnProvinciaNU = (Spinner) findViewById(R.id.spnProvinciaNU);
         spnDistritoNU = (Spinner) findViewById(R.id.spnDistritoListNU);
         btnNuevoUsuario_Regresar= (Button) findViewById(R.id.btnNuevoUsuario_Regresar);
@@ -150,6 +150,11 @@ public class NuevoUsuario extends AppCompatActivity{
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()){
+                    /*Void obj = response.body();*/
+                   /* Bundle bun=new Bundle();
+                    bun.putString("dni",obj.ge);
+                    Intent i = new Intent(Login.this,PacienteIngreso.class);
+                    i.putExtras(bun);*/
                         mensaje("SE REGISTRO EXITOSAMENTE");
                 }
                 else{

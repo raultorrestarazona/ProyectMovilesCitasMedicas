@@ -134,7 +134,7 @@
                 android:textColor="#F8F5F5" />
 
             <Spinner
-                android:id="@+id/spnDepartamentosList"
+                android:id="@+id/spnDepartamentosListNU"
                 android:layout_width="match_parent"
                 android:layout_height="47dp"
                 android:layout_marginLeft="20dp"
@@ -171,7 +171,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/input"
-                android:hint=""
+                android:hint="Provincia"
                 android:inputType="textPersonName"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
@@ -202,7 +202,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/input"
-                android:hint=""
+                android:hint="Distrito"
                 android:inputType="textPersonName"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
@@ -233,7 +233,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/input"
-                android:hint=""
+                android:hint="Celular"
                 android:inputType="textPersonName"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"

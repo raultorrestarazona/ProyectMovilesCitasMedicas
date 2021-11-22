@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.w3c.dom.Text;
 
 public class DoctorLogin extends AppCompatActivity {
     Button CerrarSesionDoc;
@@ -19,9 +16,9 @@ public class DoctorLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.doctor_ingreso);
-        txtCargoDoc = (TextView) findViewById(R.id.txtCargoDoc);
+        txtCargoDoc = (TextView) findViewById(R.id.txtDniPac);
         txtDniDoc = (TextView) findViewById(R.id.txtDniDoc);
-        txtNombreDoc = (TextView) findViewById(R.id.txtNombreDoc);
+        txtNombreDoc = (TextView) findViewById(R.id.txtNombrePac);
         CerrarSesionDoc = (Button) findViewById(R.id.btnCerrarSesionDoctor);
 
         Intent intent = getIntent();

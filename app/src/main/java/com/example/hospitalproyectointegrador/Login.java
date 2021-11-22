@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,15 +89,27 @@ public class Login extends AppCompatActivity {
                                 Intent i = new Intent(Login.this,PacienteIngreso.class);
                                 i.putExtras(bun);
                                 startActivity(i);
+                                /*Bundle bun1=new Bundle();
+                                bun.putString("dni",loginResponse.get(0).getDni());
+                                bun.putString("nombre",loginResponse.get(0).getNombre());
+                                bun.putString("nombre",loginResponse.get(0).getApellido());
+                                Intent i1 = new Intent(Login.this,PacienteIngreso.class);
+                                i1.putExtras(bun1);
+                                startActivity(i1);*/
+                                /*Intent intent=new Intent(Login.this,PacienteIngreso.class);
+                                //crear una clave dentro del objeto "intent"
+                                intent.putExtra("docente",loginResponse);
+                                //direccionar
+                                startActivity(intent);*/
                             }
                             else if(loginResponse.get(0).getNombre_rol().equalsIgnoreCase("ROLE_ADMINISTRADOR")){
                                 Bundle bun=new Bundle();
                                 bun.putString("dnidoc",loginResponse.get(0).getDni());
                                 bun.putString("nombredoc",loginResponse.get(0).getNombre());
                                 bun.putString("cargodoc",loginResponse.get(0).getNombre_rol());
-                                Intent i = new Intent(Login.this,DoctorLogin.class);
-                                i.putExtras(bun);
-                                startActivity(i);
+                                Intent i2 = new Intent(Login.this,DoctorLogin.class);
+                                i2.putExtras(bun);
+                                startActivity(i2);
                             }
                             else{
                                 startActivity(new Intent(Login.this, Login.class));
