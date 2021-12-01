@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import com.example.hospitalproyectointegrador.models.Departamento;
 import com.example.hospitalproyectointegrador.models.Distrito;
 import com.example.hospitalproyectointegrador.models.Provincia;
 import com.example.hospitalproyectointegrador.models.Usuario;
+import com.example.hospitalproyectointegrador.utils.GlobalClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PerfilUsuario extends AppCompatActivity {
+
+
     Button btnPerfilUsuario_Regresar,btnActualizarUsuarioPU;
     EditText edtDniPU,edtNombrePU,edtApellidoPU,edtFechaNacimientoPU,edtCelularPU,edtContraseñaPU,edtRepitaContraseñaPU;
     Spinner spnDepartamentoPU,spnProvinciaPU,spnDistritoPU;
@@ -36,6 +40,10 @@ public class PerfilUsuario extends AppCompatActivity {
     List<Distrito> listaDistritos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Variables Globales
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.perfil_usuario);
 
@@ -51,13 +59,34 @@ public class PerfilUsuario extends AppCompatActivity {
         spnDepartamentoPU=(Spinner) findViewById(R.id.spnDepartamentoListPU);
         spnProvinciaPU=(Spinner) findViewById(R.id.spnProvinciaPU);
         spnDistritoPU=(Spinner) findViewById(R.id.spnDistritoPU);
-        llenarDepartamentos();
-        buscarUsuario("11112222");
+        getDepartamentosApi();
+        getProvinciaApi("01");
+        getDistritoApi(101);
+        buscarUsuario(globalVariable.getDni());
+
         btnPerfilUsuario_Regresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(PerfilUsuario.this, com.example.hospitalproyectointegrador.PacienteIngreso.class));
                 finish();
+            }
+        });
+        spnDepartamentoPU.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> spn, android.view.View v, int posicion, long id)
+            {
+                String cod=lista.get(posicion).getId_departamento();
+                getProvinciaApi(cod);
+            }public void onNothingSelected(AdapterView<?> spn) {
+            }
+        });
+        spnProvinciaPU.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> spn, View view, int posicion, long id) {
+                String cod=listaProvincias.get(posicion).getId_provincia();
+                getDistritoApi(Integer.parseInt(cod));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
@@ -69,7 +98,7 @@ public class PerfilUsuario extends AppCompatActivity {
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if(response.isSuccessful()){
                     objUsuario =   response.body();
-                    mostrarDatos(objUsuario);
+                    llenarFormulario(objUsuario);
                     mensaje("OBJETO...",objUsuario.getApellidos());
                 }else{
                     mensaje("LISTANDO USUARIO....", "ERROR -> Error en else");
@@ -82,7 +111,7 @@ public class PerfilUsuario extends AppCompatActivity {
             }
         });
     }
-    void mostrarDatos(Usuario objUsuario){
+    void llenarFormulario(Usuario objUsuario){
         edtDniPU.setText(objUsuario.getDni());
         edtNombrePU.setText(objUsuario.getNombre());
         edtApellidoPU.setText(objUsuario.getApellidos());
@@ -91,62 +120,13 @@ public class PerfilUsuario extends AppCompatActivity {
         edtContraseñaPU.setText(objUsuario.getContraseña());
         edtRepitaContraseñaPU.setText(objUsuario.getContraseña());
     }
-
-    void llenarDistrito(Integer idProvincia){
-        Call<List<Distrito>> dataDistrito= ApiAdapter.getUserService().buscaDistrito(idProvincia);
-        dataDistrito.enqueue(new Callback<List<Distrito>>() {
-            @Override
-            public void onResponse(Call<List<Distrito>> call, Response<List<Distrito>> response) {
-                listaDistritos=response.body();
-                mostrarNombreDistrito();
-            }
-            @Override
-            public void onFailure(Call<List<Distrito>> call, Throwable t) {
-
-            }
-        });
-    }
-    void mostrarNombreDistrito(){
-        ArrayList<String> listaDist=new ArrayList<String>();
-        for(Distrito bean:listaDistritos){
-            listaDist.add(bean.getNombre_distrito());
-        }
-
-        ArrayAdapter<String> adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1,listaDist);
-        spnDistritoPU.setAdapter(adapter);
-    }
-    void llenarProvincia(String idDepartamento){
-        Call<List<Provincia>> dataProvincia= ApiAdapter.getUserService().buscaProvincia(idDepartamento);
-        dataProvincia.enqueue(new Callback<List<Provincia>>() {
-            @Override
-            public void onResponse(Call<List<Provincia>> call, Response<List<Provincia>> response) {
-                listaProvincias=response.body();
-                mostrarNombreProvicia();
-            }
-
-            @Override
-            public void onFailure(Call<List<Provincia>> call, Throwable t) {
-                Log.e("Error",t.getMessage());
-            }
-        });
-    }
-
-    void mostrarNombreProvicia(){
-        ArrayList<String> listaProv=new ArrayList<String>();
-        for(Provincia bean:listaProvincias)
-            listaProv.add(bean.getNombre_provincia());
-
-        ArrayAdapter<String> adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1,listaProv);
-        spnProvinciaPU.setAdapter(adapter);
-    }
-
-    void llenarDepartamentos(){
+    void getDepartamentosApi(){
         Call<List<Departamento>> data= ApiAdapter.getUserService().getDepartamentos();
         data.enqueue(new Callback<List<Departamento>>() {
             @Override
             public void onResponse(Call<List<Departamento>> call, Response<List<Departamento>> response) {
                 lista=response.body();
-                mostrarNombreDepartamento();
+                llenarSpnDepartamento();
             }
 
             @Override
@@ -155,7 +135,7 @@ public class PerfilUsuario extends AppCompatActivity {
             }
         });
     }
-    void mostrarNombreDepartamento(){
+    void llenarSpnDepartamento(){
         ArrayList<String> listaDepartamentos=new ArrayList<String>();
         for(Departamento bean:lista)
             listaDepartamentos.add(bean.getNombre_departamento());
@@ -163,7 +143,55 @@ public class PerfilUsuario extends AppCompatActivity {
         ArrayAdapter<String> adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1,listaDepartamentos);
         spnDepartamentoPU.setAdapter(adapter);
     }
+    void getProvinciaApi(String idDepartamento){
+        Call<List<Provincia>> dataProvincia= ApiAdapter.getUserService().buscaProvincia(idDepartamento);
+        dataProvincia.enqueue(new Callback<List<Provincia>>() {
+            @Override
+            public void onResponse(Call<List<Provincia>> call, Response<List<Provincia>> response) {
+                listaProvincias=response.body();
+                llenarSpnProvincia();
+            }
+            @Override
+            public void onFailure(Call<List<Provincia>> call, Throwable t) {
+                Log.e("Error",t.getMessage());
+            }
+        });
+    }
 
+    void llenarSpnProvincia(){
+        ArrayList<String> listaProv=new ArrayList<String>();
+        for(Provincia bean:listaProvincias)
+            listaProv.add(bean.getNombre_provincia());
+
+        ArrayAdapter<String> adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1,listaProv);
+        spnProvinciaPU.setAdapter(adapter);
+    }
+    void getDistritoApi(Integer idProvincia){
+        Call<List<Distrito>> dataDistrito= ApiAdapter.getUserService().buscaDistrito(idProvincia);
+        dataDistrito.enqueue(new Callback<List<Distrito>>() {
+            @Override
+            public void onResponse(Call<List<Distrito>> call, Response<List<Distrito>> response) {
+                listaDistritos=response.body();
+                llenarSpnDistrito();
+            }
+            @Override
+            public void onFailure(Call<List<Distrito>> call, Throwable t) {
+
+            }
+        });
+    }
+    void llenarSpnDistrito(){
+        ArrayList<String> listaDist=new ArrayList<String>();
+        for(Distrito bean:listaDistritos){
+            listaDist.add(bean.getNombre_distrito());
+        }
+
+        ArrayAdapter<String> adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1,listaDist);
+        spnDistritoPU.setAdapter(adapter);
+    }
+
+
+    
     /*void seleccionarDistrito(List<Departamento> data){
         for(int i=0;i<data.size();i++) {
             if (data.get(i).getId_departamento() == codigoDistrito) {

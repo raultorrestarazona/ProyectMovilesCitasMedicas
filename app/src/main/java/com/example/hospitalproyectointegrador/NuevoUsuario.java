@@ -122,22 +122,16 @@ public class NuevoUsuario extends AppCompatActivity{
         spnDepartamentosNU.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> spn, android.view.View v, int posicion, long id)
             {
-                String pos="";
-                if(spn.getItemIdAtPosition(posicion)<10){
-                    pos="0"+(spn.getItemIdAtPosition(posicion) + 1);
-                }else{
-                    pos=(spn.getItemIdAtPosition(posicion)+1)+"";
-                }
-                llenarProvincia(pos);
+                String cod=lista.get(posicion).getId_departamento();
+                llenarProvincia(cod);
             }public void onNothingSelected(AdapterView<?> spn) {
             }
         });
         spnProvinciaNU.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> spn, View view, int posicion, long id) {
-                id=(spn.getItemIdAtPosition(posicion) + 801);
-                int poss = (int) id;
-                llenarDistrito(poss);
+                String cod=listaProvincias.get(posicion).getId_provincia();
+                llenarDistrito(Integer.parseInt(cod));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {

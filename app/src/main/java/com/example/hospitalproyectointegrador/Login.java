@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hospitalproyectointegrador.Interfaces.ApiAdapter;
 import com.example.hospitalproyectointegrador.models.LoginRequest;
 import com.example.hospitalproyectointegrador.models.LoginResponse;
+import com.example.hospitalproyectointegrador.utils.GlobalClass;
 
 import java.util.ArrayList;
 
@@ -22,11 +23,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Login extends AppCompatActivity {
+    private String varDNI;
     Button btnIniciarSesionLogin, btnCrearCuenta;
     EditText username, contraseña;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Usando Variables Globales
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+        //
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         username = (EditText) findViewById(R.id.edtUsuarioI);
@@ -48,7 +54,8 @@ public class Login extends AppCompatActivity {
                 } else {
                     //procced to login
                     login();
-
+                    //Seteando
+                    globalVariable.setDni(username.getText().toString());
                     /*LoginResponse loginResponse = new LoginResponse();
                     Toast.makeText(Login.this,""+loginResponse.getNombre_rol(),Toast.LENGTH_LONG).show();
                     if(loginResponse.getNombre_rol().equalsIgnoreCase("ROLE_PACIENTE")){
@@ -86,6 +93,8 @@ public class Login extends AppCompatActivity {
                                 Bundle bun=new Bundle();
                                 bun.putString("dni",loginResponse.get(0).getDni());
                                 bun.putString("nombre",loginResponse.get(0).getNombre());
+                                varDNI=loginResponse.get(0).getDni();
+
                                 Intent i = new Intent(Login.this,PacienteIngreso.class);
                                 i.putExtras(bun);
                                 startActivity(i);
