@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hospitalproyectointegrador.Interfaces.ApiAdapter;
 import com.example.hospitalproyectointegrador.models.LoginResponse;
 import com.example.hospitalproyectointegrador.models.Usuario;
+import com.example.hospitalproyectointegrador.utils.GlobalClass;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,6 +30,9 @@ public class PacienteIngreso extends AppCompatActivity {
     Usuario objUsuario = new Usuario();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Usando Variables Globales
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+        //
         super.onCreate(savedInstanceState);
         setContentView(R.layout.paciente_ingreso);
         txtNombre = (TextView)  findViewById(R.id.txtNombrePac);
@@ -38,20 +42,19 @@ public class PacienteIngreso extends AppCompatActivity {
         Intent intent = getIntent();
 
             String passedName = intent.getStringExtra("nombre");
-            String passedDni = intent.getStringExtra("dni");
-            txtNombre.setText("NOMBRE: " + passedName);
-            txtDni.setText("DNI: "+ passedDni);
+            if(passedName!=null){
+                globalVariable.setNombre(passedName);
+            }
+            txtNombre.setText("NOMBRE: " + globalVariable.getNombre());
+            txtDni.setText("DNI: "+ globalVariable.getDni());
 
 
         btnPerfilPaciente= findViewById(R.id.btnPerfilPaciente);
         btnPerfilPaciente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listarUsuario(passedDni);
                 //crear objeto de la clase Intent
                 Intent intent=new Intent(PacienteIngreso.this, com.example.hospitalproyectointegrador.PerfilUsuario.class);
-                intent.putExtra("dniPerf", (Serializable) objUsuario.getDni());
-                //direccionar
                 startActivity(intent);
             }
         });

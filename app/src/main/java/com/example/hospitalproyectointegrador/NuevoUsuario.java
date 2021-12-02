@@ -101,7 +101,7 @@ public class NuevoUsuario extends AppCompatActivity{
                     obj.setCelular(cel);
                     obj.setDni(dni);
                     obj.setContraseña(contra);
-                    obj.setId_distrito(idDist + 10100);
+                    obj.setId_distrito(Integer.parseInt(listaDistritos.get(idDist).getId_distrito()));
                     registrar(obj);
 
                     startActivity(new Intent(NuevoUsuario.this, com.example.hospitalproyectointegrador.Login.class));

@@ -23,7 +23,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Login extends AppCompatActivity {
-    private String varDNI;
     Button btnIniciarSesionLogin, btnCrearCuenta;
     EditText username, contraseña;
     @Override
@@ -85,7 +84,6 @@ public class Login extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(Login.this, "Login succesful", Toast.LENGTH_LONG).show();
                     ArrayList<LoginResponse> loginResponse = response.body();
-
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -93,7 +91,7 @@ public class Login extends AppCompatActivity {
                                 Bundle bun=new Bundle();
                                 bun.putString("dni",loginResponse.get(0).getDni());
                                 bun.putString("nombre",loginResponse.get(0).getNombre());
-                                varDNI=loginResponse.get(0).getDni();
+
 
                                 Intent i = new Intent(Login.this,PacienteIngreso.class);
                                 i.putExtras(bun);

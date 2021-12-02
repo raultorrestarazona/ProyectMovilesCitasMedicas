@@ -68,7 +68,7 @@ public class PerfilUsuario extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(PerfilUsuario.this, com.example.hospitalproyectointegrador.PacienteIngreso.class));
-                finish();
+
             }
         });
         spnDepartamentoPU.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -189,17 +189,6 @@ public class PerfilUsuario extends AppCompatActivity {
         ArrayAdapter<String> adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1,listaDist);
         spnDistritoPU.setAdapter(adapter);
     }
-
-
-    
-    /*void seleccionarDistrito(List<Departamento> data){
-        for(int i=0;i<data.size();i++) {
-            if (data.get(i).getId_departamento() == codigoDistrito) {
-                spDistrito.setSelection(i);
-                break;
-            }
-        }
-    }*/
 
     void mensaje(String s, String msg){
         Toast toast1 =  Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG);
