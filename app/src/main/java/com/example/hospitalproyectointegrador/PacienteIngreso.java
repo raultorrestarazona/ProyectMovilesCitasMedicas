@@ -42,9 +42,12 @@ public class PacienteIngreso extends AppCompatActivity {
         Intent intent = getIntent();
 
             String passedName = intent.getStringExtra("nombre");
+            Integer passedId_Paciente= intent.getIntExtra("id_Paciente",1);
             if(passedName!=null){
                 globalVariable.setNombre(passedName);
+                globalVariable.setId_Paciente(passedId_Paciente);
             }
+            System.out.println(globalVariable.getId_Paciente());
             txtNombre.setText("NOMBRE: " + globalVariable.getNombre());
             txtDni.setText("DNI: "+ globalVariable.getDni());
 

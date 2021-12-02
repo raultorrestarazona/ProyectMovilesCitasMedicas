@@ -6,6 +6,7 @@ public class LoginResponse {
     private String nombre_rol;
     private String nombre;
     private String apellido;
+    private Integer id_Paciente;
     public String getDni() {
         return dni;
     }
@@ -36,5 +37,13 @@ public class LoginResponse {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public Integer getId_Paciente() {
+        return id_Paciente;
+    }
+
+    public void setId_Paciente(Integer id_Paciente) {
+        this.id_Paciente = id_Paciente;
     }
 }

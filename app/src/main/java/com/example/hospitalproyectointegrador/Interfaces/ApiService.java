@@ -1,11 +1,15 @@
 package com.example.hospitalproyectointegrador.Interfaces;
 
+import com.example.hospitalproyectointegrador.models.Area;
+import com.example.hospitalproyectointegrador.models.Cita;
 import com.example.hospitalproyectointegrador.models.Departamento;
 import com.example.hospitalproyectointegrador.models.Distrito;
+import com.example.hospitalproyectointegrador.models.Hora;
 import com.example.hospitalproyectointegrador.models.LoginRequest;
 import com.example.hospitalproyectointegrador.models.LoginResponse;
 import com.example.hospitalproyectointegrador.models.Provincia;
 import com.example.hospitalproyectointegrador.models.Rol;
+import com.example.hospitalproyectointegrador.models.Sede;
 import com.example.hospitalproyectointegrador.models.Usuario;
 
 import java.util.ArrayList;
@@ -38,4 +42,16 @@ public interface ApiService {
 
     @GET("usuario/{username}")
     public abstract Call<Usuario> UsuarioxUsername(@Path("username") String username);
+
+    //Kevin
+    @GET("sede")
+    Call<List<Sede>> getSedes();
+    @GET("area")
+    Call<List<Area>> getAreas();
+    @GET("hora")
+    Call<List<Hora>> getHoras();
+    @PUT("usuario/{idUsuario}")
+    public abstract Call<Void> updateUsuario(@Path("idUsuario") int idUsuario, @Body Usuario objUsuario);
+    @POST("cita")
+    public abstract Call<Void> saveCita(@Body Cita objCita);
 }

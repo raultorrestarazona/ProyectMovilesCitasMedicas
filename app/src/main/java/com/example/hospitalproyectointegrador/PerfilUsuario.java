@@ -2,6 +2,7 @@ package com.example.hospitalproyectointegrador;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,13 +32,17 @@ public class PerfilUsuario extends AppCompatActivity {
 
 
     Button btnPerfilUsuario_Regresar,btnActualizarUsuarioPU;
-    EditText edtDniPU,edtNombrePU,edtApellidoPU,edtFechaNacimientoPU,edtCelularPU,edtContraseñaPU,edtRepitaContraseñaPU;
+    EditText edtDniPU,edtNombrePU,edtApellidosPU,edtFechaNacimientoPU,edtCelularPU,edtContraseñaPU,edtRepitaContraseñaPU;
     Spinner spnDepartamentoPU,spnProvinciaPU,spnDistritoPU;
 
     Usuario objUsuario = new Usuario();
     List<Departamento> lista;
     List<Provincia> listaProvincias;
     List<Distrito> listaDistritos;
+
+    String reg_texto="[a-zA-Z\\sáéíóúÁÉÍÓÚñÑ]{2,25}";
+    String reg_contraseña = "[0-9a-zA-Z\\sáéíóúÁÉÍÓÚñÑ]{2,40}";
+    String reg_fechaNacimiento = "([0-9]{4})-([0-9]{2})-([0-9]{2})";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -51,7 +56,7 @@ public class PerfilUsuario extends AppCompatActivity {
         btnActualizarUsuarioPU=(Button) findViewById(R.id.btnPerfilUsuario_Actualizar);
         edtDniPU=(EditText) findViewById(R.id.edtDniPU);
         edtNombrePU=(EditText) findViewById(R.id.edtNombrePU);
-        edtApellidoPU=(EditText) findViewById(R.id.edtApellidosPU);
+        edtApellidosPU=(EditText) findViewById(R.id.edtApellidosPU);
         edtFechaNacimientoPU=(EditText) findViewById(R.id.edtFechaNacimientoPU);
         edtCelularPU=(EditText) findViewById(R.id.edtCelularPU);
         edtContraseñaPU=(EditText) findViewById(R.id.edtContraseñaPU);
@@ -63,6 +68,7 @@ public class PerfilUsuario extends AppCompatActivity {
         getProvinciaApi("01");
         getDistritoApi(101);
         buscarUsuario(globalVariable.getDni());
+
 
         btnPerfilUsuario_Regresar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +93,52 @@ public class PerfilUsuario extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        btnActualizarUsuarioPU.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nomb = edtNombrePU.getText().toString();
+                String ape = edtApellidosPU.getText().toString();
+                String fechaNaci = edtFechaNacimientoPU.getText().toString();
+                String cel = edtCelularPU.getText().toString();
+                String dni = edtDniPU.getText().toString();
+                String contra = edtContraseñaPU.getText().toString();
+                String rptcontra = edtRepitaContraseñaPU.getText().toString();
+                int idDist=spnDistritoPU.getSelectedItemPosition();
+                /*String distrito = spnDistritoPU.getSelectedItem().toString();*/
+
+
+                if (!nomb.matches(reg_texto)){
+                    edtNombrePU.setError("El nombre contiene de 2 a 25 letras");
+                }else if (!ape.matches(reg_texto)){
+                    edtApellidosPU.setError("El apellido contiene de 2 a 25 letras");
+                }else if(!fechaNaci.matches(reg_fechaNacimiento)){
+                    edtFechaNacimientoPU.setError("La fecha de nacimiento es yyyy-mm-dd");
+
+                }else if (!cel.matches("\\d{9}")){
+                    edtCelularPU.setError("El celular debe de ser 9 numeros");
+                }else if (!dni.matches("\\d{8}")){
+                    edtDniPU.setError("El Dni tiene 8 digitos");
+
+                }else if (!contra.matches(reg_contraseña)){
+                    edtContraseñaPU.setError("Ingrese una contraseña valida");
+                }else if (!rptcontra.matches(reg_contraseña)){
+                    edtRepitaContraseñaPU.setError("Repita su contraseña");
+                }else {
+                    Usuario obj = new Usuario();
+                    obj.setNombre(nomb);
+                    obj.setApellidos(ape);
+                    obj.setFechanacimiento(fechaNaci);
+                    obj.setCelular(cel);
+                    obj.setDni(dni);
+                    obj.setContraseña(contra);
+                    obj.setId_distrito(Integer.parseInt(listaDistritos.get(idDist).getId_distrito()));
+                    actualizarApi(obj);
+                    startActivity(new Intent(PerfilUsuario.this, com.example.hospitalproyectointegrador.PacienteIngreso.class));
+                    finish();
+                }
+
             }
         });
     }
@@ -114,11 +166,11 @@ public class PerfilUsuario extends AppCompatActivity {
     void llenarFormulario(Usuario objUsuario){
         edtDniPU.setText(objUsuario.getDni());
         edtNombrePU.setText(objUsuario.getNombre());
-        edtApellidoPU.setText(objUsuario.getApellidos());
+        edtApellidosPU.setText(objUsuario.getApellidos());
         edtFechaNacimientoPU.setText(objUsuario.getFechanacimiento());
         edtCelularPU.setText(objUsuario.getCelular());
-        edtContraseñaPU.setText(objUsuario.getContraseña());
-        edtRepitaContraseñaPU.setText(objUsuario.getContraseña());
+        edtContraseñaPU.setText("");
+        edtRepitaContraseñaPU.setText("");
     }
     void getDepartamentosApi(){
         Call<List<Departamento>> data= ApiAdapter.getUserService().getDepartamentos();
@@ -157,7 +209,6 @@ public class PerfilUsuario extends AppCompatActivity {
             }
         });
     }
-
     void llenarSpnProvincia(){
         ArrayList<String> listaProv=new ArrayList<String>();
         for(Provincia bean:listaProvincias)
@@ -189,7 +240,24 @@ public class PerfilUsuario extends AppCompatActivity {
         ArrayAdapter<String> adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1,listaDist);
         spnDistritoPU.setAdapter(adapter);
     }
-
+    public void actualizarApi(Usuario obj){
+        Call<Void> call = ApiAdapter.getUserService().updateUsuario(objUsuario.getId_usuario(),obj);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    mensaje("","SE ACTUALIZO EXITOSAMENTE");
+                }
+                else{
+                    mensaje("","ERROR -> Error en la respuesta");
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                mensaje("","ERROR -> " +   t.getMessage());
+            }
+        });
+    }
     void mensaje(String s, String msg){
         Toast toast1 =  Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG);
         toast1.show();

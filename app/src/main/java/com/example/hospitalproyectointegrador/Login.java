@@ -91,7 +91,7 @@ public class Login extends AppCompatActivity {
                                 Bundle bun=new Bundle();
                                 bun.putString("dni",loginResponse.get(0).getDni());
                                 bun.putString("nombre",loginResponse.get(0).getNombre());
-
+                                bun.putInt("id_Paciente",loginResponse.get(0).getId_Paciente());
 
                                 Intent i = new Intent(Login.this,PacienteIngreso.class);
                                 i.putExtras(bun);

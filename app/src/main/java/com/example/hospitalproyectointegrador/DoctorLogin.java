@@ -35,9 +35,10 @@ public class DoctorLogin extends AppCompatActivity {
         CerrarSesionDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DoctorLogin.this, Log.class));
+                startActivity(new Intent(DoctorLogin.this, com.example.hospitalproyectointegrador.Login.class));
                 finish();
             }
+
         });
     }
 }

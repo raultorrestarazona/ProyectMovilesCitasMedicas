@@ -3,6 +3,7 @@ package com.example.hospitalproyectointegrador.models;
 import java.io.Serializable;
 
 public class Usuario implements Serializable {
+    private int id_usuario;
     private String nombre;
     private String apellidos;
     private String fechanacimiento;
@@ -33,6 +34,14 @@ public class Usuario implements Serializable {
 
     public void setFechanacimiento(String fechanacimiento) {
         this.fechanacimiento = fechanacimiento;
+    }
+
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
     public String getCelular() {

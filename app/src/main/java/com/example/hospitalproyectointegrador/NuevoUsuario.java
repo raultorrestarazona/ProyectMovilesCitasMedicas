@@ -89,11 +89,7 @@ public class NuevoUsuario extends AppCompatActivity{
                     edtContraseñaNU.setError("Ingrese una contraseña valida");
                 }else if (!rptcontra.matches(reg_contraseña)){
                     edtRptContraseñaNU.setError("Repita su contraseña");
-                }
-                else if (idDist == 0){
-                    mensaje("AVISO => "+"Seleccione un Distrito");
-                    spnDistritoNU.requestFocus();
-                } else {
+                }else {
                     Usuario obj = new Usuario();
                     obj.setNombre(nomb);
                     obj.setApellidos(ape);
